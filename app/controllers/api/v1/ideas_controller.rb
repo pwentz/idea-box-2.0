@@ -7,11 +7,10 @@ class Api::V1::IdeasController < ApplicationController
 
   def create
     idea = Idea.create(idea_params)
-    respond_with :api, :v1, idea
   end
 
   def destroy
-    respond_with :api, :v1, Idea.destroy(params[:id])
+    Idea.destroy(params[:id])
   end
 
   def update
