@@ -32,7 +32,7 @@ class IdeasContainer {
   handleSubmit() {
     api.ideasPost()
       .done(data => {
-        $('.ideas div').hide()
+        $('.ideas').empty()
         this.renderIdeas()
       })
   }
@@ -40,26 +40,28 @@ class IdeasContainer {
   handleDelete() {
     api.ideasDelete(this.targetIdea().id)
       .done(data => {
-        $('.ideas div').hide()
+        $('.ideas').empty()
         this.renderIdeas()
       })
   }
 
   handleUpdate() {
-    this.stashIdea()
-    api.ideasUpdate(this.targetIdea().id)
+    let id = this.targetIdea().id
+    this.stashIdea(id)
+    api.ideasUpdate(id)
       .done(data => {
-        $('.ideas div').hide()
+        localStorage.clear()
+        $('.ideas').empty()
         this.renderIdeas()
       })
   }
 
-  stashIdea() {
+  stashIdea(id) {
     localStorage.setItem(
-      this.targetIdea().id,
+      id,
       JSON.stringify(
-        { title: this.targetTitle(),
-          body: this.targetBody() }
+        { title: this.targetTitle(id),
+          body: this.targetBody(id) }
       )
     )
   }
@@ -68,11 +70,11 @@ class IdeasContainer {
     return event.target.closest('div')
   }
 
-  targetTitle() {
-    return $(`#${this.targetIdea().id} .idea-title`)[0].innerText
+  targetTitle(id) {
+    return $(`#${id} .idea-title`)[0].innerText.trim()
   }
 
-  targetBody() {
-    return $(`#${this.targetIdea().id} .idea-body`)[0].innerText
+  targetBody(id) {
+    return $(`#${id} .idea-body`)[0].innerText.trim()
   }
 }
