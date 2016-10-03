@@ -103,6 +103,20 @@ class IdeasContainer {
     this.dispatchUpdate(this.target())
   }
 
+  handleSearch() {
+    $('.idea').each((index, idea) => {
+      let searchParams = event.target.value.toLowerCase()
+      let ideaTitle = $(idea).find('.idea-title')[0].innerText.toLowerCase()
+      let ideaBody = $(idea).find('.idea-body')[0].innerText.toLowerCase()
+      if (ideaTitle.indexOf(searchParams) === -1 && ideaBody.indexOf(searchParams) === -1) {
+        $(idea).hide()
+      }
+      else {
+        $(idea).show()
+      }
+    })
+  }
+
   target() {
     return event.target.closest('.idea').id
   }

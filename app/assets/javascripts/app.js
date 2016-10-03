@@ -15,6 +15,7 @@ $(document).ready( () => {
   bodyListener(ic)
   increaseQualityListener(ic)
   decreaseQualityListener(ic)
+  searchListener(ic)
 })
 
 function submitListener(ic) {
@@ -51,4 +52,8 @@ function increaseQualityListener(ic) {
 
 function decreaseQualityListener(ic) {
   $('.app').on('click', '.ideas .fi-dislike', ic.handleQualityDecrease.bind(ic))
+}
+
+function searchListener(ic) {
+  $('.app').on('keyup', '.search', ic.handleSearch)
 }
