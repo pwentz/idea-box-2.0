@@ -18,4 +18,13 @@ class AjaxHelper {
             type: 'DELETE'
            })
   }
+
+  ideasUpdate(id) {
+    return $.ajax({
+            url: `/api/v1/ideas/${id}`,
+            type: 'PUT',
+            data: { idea: JSON.parse(localStorage.getItem(id)) }
+           })
+  }
+
 }
