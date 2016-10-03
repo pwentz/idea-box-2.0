@@ -21,10 +21,17 @@ class IdeasContainer {
                 >
                   ${i.body}
                 </h5>
-                <p>${i.quality}</p>
+                <p
+                  class='idea-quality'
+                >
+                  ${i.quality}
+                </p>
                 <button class='button alert hollow delete-idea'>
                   <i class='fi-x'></i>
                 </button>
+                <br>
+                <i class='fi-like'></i>
+                <i class='fi-dislike'></i>
               </div>`
     })
   }
@@ -38,7 +45,7 @@ class IdeasContainer {
   }
 
   handleDelete() {
-    api.ideasDelete(this.targetIdea().id)
+    api.ideasDelete(this.target())
       .done(data => {
         $('.ideas').empty()
         this.renderIdeas()
@@ -46,8 +53,12 @@ class IdeasContainer {
   }
 
   handleUpdate() {
-    let id = this.targetIdea().id
+    let id = this.target()
     this.stashIdea(id)
+    this.dispatchUpdate(id)
+  }
+
+  dispatchUpdate(id) {
     api.ideasUpdate(id)
       .done(data => {
         localStorage.clear()
@@ -56,18 +67,35 @@ class IdeasContainer {
       })
   }
 
-  stashIdea(id) {
+  stashIdea(id, q = null) {
     localStorage.setItem(
       id,
       JSON.stringify(
         { title: this.targetTitle(id),
-          body: this.targetBody(id) }
+          body: this.targetBody(id),
+          quality: q || this.targetQuality(id) }
       )
     )
   }
 
-  targetIdea() {
-    return event.target.closest('div')
+  handleQualityIncrease() {
+    let q = this.targetQuality(this.target())
+    if (q === 'plausible' || q === 'genius') q = 'genius'
+    if (q === 'swill') q = 'plausible'
+    this.stashIdea(this.target(), q)
+    this.dispatchUpdate(this.target())
+  }
+
+  handleQualityDecrease() {
+    let q = this.targetQuality(this.target())
+    if (q === 'plausible' || q === 'swill') q = 'swill'
+    if (q === 'genius') q = 'plausible'
+    this.stashIdea(this.target(), q)
+    this.dispatchUpdate(this.target())
+  }
+
+  target() {
+    return event.target.closest('div').id
   }
 
   targetTitle(id) {
@@ -76,5 +104,9 @@ class IdeasContainer {
 
   targetBody(id) {
     return $(`#${id} .idea-body`)[0].innerText.trim()
+  }
+
+  targetQuality(id) {
+    return $(`#${id} .idea-quality`)[0].innerText.trim()
   }
 }

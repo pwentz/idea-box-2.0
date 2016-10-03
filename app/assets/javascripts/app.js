@@ -13,6 +13,8 @@ $(document).ready( () => {
   deleteListener(ic);
   titleListener(ic);
   bodyListener(ic)
+  increaseQualityListener(ic)
+  decreaseQualityListener(ic)
 })
 
 function submitListener(ic) {
@@ -43,3 +45,10 @@ function bodyListener(ic) {
   })
 }
 
+function increaseQualityListener(ic) {
+  $('.app').on('click', '.ideas .fi-like', ic.handleQualityIncrease.bind(ic))
+}
+
+function decreaseQualityListener(ic) {
+  $('.app').on('click', '.ideas .fi-dislike', ic.handleQualityDecrease.bind(ic))
+}
