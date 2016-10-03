@@ -8,30 +8,37 @@ class IdeasContainer {
 
   formattedIdeas(ideas) {
     return ideas.map(i => {
-      return `<div id=${i.id}>
-                <h1
-                  class='idea-title'
-                  contentEditable='true'
-                >
-                  ${i.title}
-                </h1>
-                <h5
-                  class='idea-body'
-                  contentEditable='true'
-                >
-                  ${i.body}
-                </h5>
-                <p
-                  class='idea-quality'
-                >
-                  ${i.quality}
-                </p>
-                <button class='button alert hollow delete-idea'>
-                  <i class='fi-x'></i>
-                </button>
-                <br>
-                <i class='fi-like'></i>
-                <i class='fi-dislike'></i>
+      return `<div class='row'>
+                <div class='small-6 small-centered columns idea' id=${i.id}>
+                  <h3
+                    class='idea-title'
+                    contentEditable='true'
+                  >
+                    ${i.title}
+                  </h3>
+                  <h5
+                    class='idea-body'
+                    contentEditable='true'
+                  >
+                    ${i.body}
+                  </h5>
+                  <p
+                    class='idea-quality'
+                  >
+                    ${i.quality}
+                  </p>
+                  <div class='row'>
+                    <div class='small-3 columns'>
+                      <button class='button alert hollow delete-idea'>
+                        <i class='fi-x'></i>
+                      </button>
+                    </div>
+                    <div class='small-1 columns q-adjustment'>
+                      <i class='fi-like'></i>
+                      <i class='fi-dislike'></i>
+                    </div>
+                  </div>
+                </div>
               </div>`
     })
   }
@@ -39,6 +46,8 @@ class IdeasContainer {
   handleSubmit() {
     api.ideasPost()
       .done(data => {
+        $('.new-title').val('')
+        $('.new-body').val('')
         $('.ideas').empty()
         this.renderIdeas()
       })
@@ -95,7 +104,7 @@ class IdeasContainer {
   }
 
   target() {
-    return event.target.closest('div').id
+    return event.target.closest('.idea').id
   }
 
   targetTitle(id) {

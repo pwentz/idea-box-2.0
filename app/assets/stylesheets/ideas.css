@@ -1,0 +1,24 @@
+.idea h3, .idea h5, .idea p {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.idea-title {
+  margin-top: 10px;
+}
+
+.fi-like {
+  color: green;
+}
+
+.fi-dislike {
+  color: maroon;
+}
+
+.idea {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  border-radius: 12px;
+  border: 1px solid rgba(10, 10, 10, 0.25);
+  background: rgba(243, 241, 241, 0.8)
+}
