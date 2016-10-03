@@ -15,3 +15,9 @@
  *= require foundation_and_overrides
 
  */
+.app {
+  background-image: url('ocean-background.jpg');
+  background-position: center;
+  background-size: center;
+  background-attachment: fixed;
+}
