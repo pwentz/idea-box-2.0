@@ -14,7 +14,9 @@ class Api::V1::IdeasController < ApplicationController
   end
 
   def update
-    Idea.update(params[:id], idea_params)
+    idea = Idea.find(params[:id])
+    idea.update(idea_params)
+    respond_with idea
   end
 
   def clear
