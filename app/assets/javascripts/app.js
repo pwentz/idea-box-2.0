@@ -27,22 +27,22 @@ function deleteListener(ic) {
 }
 
 function titleListener(ic) {
-  $('.app').on('blur', '.ideas .idea-title', ic.handleUpdate.bind(ic))
-  $('.app').on('keypress', '.ideas .idea-title', (e) => {
+  $('.app').on('keydown', '.ideas .idea-title', (e) => {
     if (e.which === 13) {
       ic.handleUpdate.call(ic)
-      return false;
+      $(e.target).blur()
+      return false
    }
   })
 }
 
 function bodyListener(ic) {
-  $('.app').on('blur', '.ideas .idea-body', ic.handleUpdate.bind(ic))
-  $('.app').on('keypress', '.ideas .idea-body', (e) => {
+  $('.app').on('keydown', '.ideas .idea-body', (e) => {
     if (e.which === 13) {
       ic.handleUpdate.call(ic)
-      return false;
-   }
+      $(e.target).blur()
+      return false
+    }
   })
 }
 
