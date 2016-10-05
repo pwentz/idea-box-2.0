@@ -42,6 +42,9 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'selenium-webdriver'
 end
 
 group :development do

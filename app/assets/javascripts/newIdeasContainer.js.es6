@@ -4,10 +4,10 @@ class NewIdeasContainer {
       `<div class='filler'></div>
       <h1 id='header'>Idea box</h1>
       <div class='row'>
-       <div class='small-6 columns small-centered'>
-        <input type='text' class='new-title' />
+       <div class='small-6 columns small-centered new-idea-container'>
+        <input type='text' class='new-title' name='new-title'/>
         <br>
-        <input type='text' class='new-body' />
+        <input type='text' class='new-body' name='new-body'/>
         <br>
         <div class='row'>
           <div class='small-2 columns small-centered'>

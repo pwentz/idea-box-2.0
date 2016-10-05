@@ -38,7 +38,9 @@ class IdeasContainer {
                   <div class='row action-container'>
                     <div class='small-3 columns'>
 
-                      <button class='button alert hollow delete-idea'>
+                      <button class='button alert hollow delete-idea'
+                              name='delete-idea'
+                      >
                         <i class='fi-x'></i>
                       </button>
 
@@ -56,13 +58,26 @@ class IdeasContainer {
   }
 
   handleSubmit() {
-    api.ideasPost()
+    let body = $('.new-body')[0].value
+    if (body.length > 100) body = this.handleTruncation(body)
+    api.ideasPost(body)
       .done( () => {
         $('.new-title').val('')
         $('.new-body').val('')
         $('.ideas').empty()
         this.renderIdeas()
       })
+  }
+
+  handleTruncation(body) {
+    const truncBody = body.split('').reduce(this.scanBodyForLength, '')
+    const splitBody = truncBody.split(' ')
+    return splitBody.slice(0, splitBody.length - 1).join(' ')
+  }
+
+  scanBodyForLength(result, letter, index) {
+    if (index <= 99) result += letter
+    return result
   }
 
   handleDelete(e) {
@@ -72,7 +87,7 @@ class IdeasContainer {
 
   handleUpdate() {
     const id = this.targetId()
-    this.stashIdea(id)
+    this.stashIdea()
     this.dispatchUpdate(id)
   }
 
@@ -92,10 +107,7 @@ class IdeasContainer {
 
   handleSearch() {
     $('.idea').each((index, idea) => {
-      const searchParams = event.target.value.toLowerCase()
-      const ideaTitle = $(idea).find('.idea-title')[0].innerText.toLowerCase()
-      const ideaBody = $(idea).find('.idea-body')[0].innerText.toLowerCase()
-      if (ideaTitle.indexOf(searchParams) === -1 && ideaBody.indexOf(searchParams) === -1) {
+      if (this.paramsAgainstIdea(idea)) {
         $(idea).hide()
       }
       else {
@@ -104,9 +116,16 @@ class IdeasContainer {
     })
   }
 
-  stashIdea(id, q = null) {
+  paramsAgainstIdea(idea) {
+    const searchParams = event.target.value.toLowerCase()
+    const ideaTitle = this.targetTitle(idea.id).toLowerCase()
+    const ideaBody = this.targetBody(idea.id).toLowerCase()
+    return ideaTitle.indexOf(searchParams) === -1 && ideaBody.indexOf(searchParams) === -1
+  }
+
+  stashIdea(q = null) {
+    const id = this.targetId()
     localStorage.setItem(
-      id,
       JSON.stringify(
         { title: this.targetTitle(id),
           body: this.targetBody(id),
