@@ -1,4 +1,8 @@
 class IdeasContainer {
+  constructor() {
+    this.transitions = new TransitionHelper()
+  }
+
   renderIdeas() {
     api.ideasGet()
       .done(
@@ -31,7 +35,7 @@ class IdeasContainer {
                     ${i.quality}
                   </p>
 
-                  <div class='row'>
+                  <div class='row action-container'>
                     <div class='small-3 columns'>
 
                       <button class='button alert hollow delete-idea'>
@@ -62,39 +66,35 @@ class IdeasContainer {
   }
 
   handleDelete(e) {
+    this.transitions.fadeIdea(e)
     api.ideasDelete(this.targetId())
-      .done( () => {
-        $(e.target.closest('.idea')).hide()
-      })
   }
 
   handleUpdate() {
-    let id = this.targetId()
+    const id = this.targetId()
     this.stashIdea(id)
     this.dispatchUpdate(id)
   }
 
   handleQualityIncrease() {
-    let $q = this.targetQuality(this.targetId())
-    if ($q.innerText === 'plausible' || $q.innerText === 'genius') $q.innerText = 'genius'
-    if ($q.innerText === 'swill') $q.innerText = 'plausible'
+    const $q = this.targetQuality(this.targetId())
+    this.transitions.upQuality($q)
     this.stashIdea(this.targetId(), $q.innerText)
     this.dispatchUpdate(this.targetId())
   }
 
   handleQualityDecrease() {
-    let $q = this.targetQuality(this.targetId())
-    if ($q.innerText === 'plausible' || $q.innerText === 'swill') $q.innerText = 'swill'
-    if ($q.innerText === 'genius') $q.innerText = 'plausible'
+    const $q = this.targetQuality(this.targetId())
+    this.transitions.downQuality($q)
     this.stashIdea(this.targetId(), $q.innerText)
     this.dispatchUpdate(this.targetId())
   }
 
   handleSearch() {
     $('.idea').each((index, idea) => {
-      let searchParams = event.target.value.toLowerCase()
-      let ideaTitle = $(idea).find('.idea-title')[0].innerText.toLowerCase()
-      let ideaBody = $(idea).find('.idea-body')[0].innerText.toLowerCase()
+      const searchParams = event.target.value.toLowerCase()
+      const ideaTitle = $(idea).find('.idea-title')[0].innerText.toLowerCase()
+      const ideaBody = $(idea).find('.idea-body')[0].innerText.toLowerCase()
       if (ideaTitle.indexOf(searchParams) === -1 && ideaBody.indexOf(searchParams) === -1) {
         $(idea).hide()
       }

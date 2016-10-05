@@ -20,5 +20,23 @@
   margin-bottom: 25px;
   border-radius: 12px;
   border: 1px solid rgba(10, 10, 10, 0.25);
-  background: rgba(243, 241, 241, 0.8)
+  background: rgba(243, 241, 241, 0.8);
+  transition-property: width, height;
+  transition-duration: 0.75s, 0.5s;
+  transition-timing-function: ease-in;
+}
+
+.fadeOut {
+  height: 0px;
+  width: 0px;
+}
+
+.idea-quality {
+  transition-property: font-size;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-out;
+}
+
+.upSize {
+  font-size: 24px;
 }
