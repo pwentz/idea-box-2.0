@@ -21,7 +21,7 @@ class NewIdeasContainer {
        </div>
       </div>
       <div class='small-4 columns small-centered'>
-        <input type='text' class='search' placeholder='Search by title...' />
+        <input type='text' class='search' name='search-ideas' placeholder='Search by title...' />
       </div>`
     )
   }
