@@ -94,14 +94,14 @@ class IdeasContainer {
   handleQualityIncrease() {
     const $q = this.targetQuality(this.targetId())
     this.transitions.upQuality($q)
-    this.stashIdea(this.targetId(), $q.innerText)
+    this.stashIdea($q.innerText)
     this.dispatchUpdate(this.targetId())
   }
 
   handleQualityDecrease() {
     const $q = this.targetQuality(this.targetId())
     this.transitions.downQuality($q)
-    this.stashIdea(this.targetId(), $q.innerText)
+    this.stashIdea($q.innerText)
     this.dispatchUpdate(this.targetId())
   }
 
