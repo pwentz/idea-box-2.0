@@ -120,7 +120,7 @@ class IdeasContainer {
     const searchParams = event.target.value.toLowerCase()
     const ideaTitle = this.targetTitle(idea.id).toLowerCase()
     const ideaBody = this.targetBody(idea.id).toLowerCase()
-    return ideaTitle.indexOf(searchParams) === -1 && ideaBody.indexOf(searchParams) === -1
+    return !ideaTitle.includes(searchParams) && !ideaBody.includes(searchParams)
   }
 
   stashIdea(q = null) {
