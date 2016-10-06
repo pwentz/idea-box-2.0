@@ -50,6 +50,6 @@ class IdeaBox {
   }
 
   bindSearchListener(ic) {
-    $('.app').on('keyup', '.search', this.ic.handleSearch)
+    $('.app').on('keyup', '.search', this.ic.handleSearch.bind(this.ic))
   }
 }

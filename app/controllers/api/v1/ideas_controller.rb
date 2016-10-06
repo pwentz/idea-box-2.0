@@ -16,11 +16,6 @@ class Api::V1::IdeasController < ApplicationController
   def update
     idea = Idea.find(params[:id])
     idea.update(idea_params)
-    respond_with idea
-  end
-
-  def clear
-    respond_with Idea.destroy_all
   end
 
   private
